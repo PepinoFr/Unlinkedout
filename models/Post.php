@@ -1,10 +1,10 @@
 <?php
 class Post
 {
-    private $_id;
-    private $_title;
-    private $_body;
-    private $_created_at;
+    private $id;
+    private $title;
+    private $body;
+    private $created_at;
 
     public function __construct(array $data)
     {
@@ -29,7 +29,7 @@ class Post
     {
         $id = (int) $id;
         if($id > 0)
-            $this->_id = $id;
+            $this->id = $id;
     }
 
     /**
@@ -38,7 +38,7 @@ class Post
     public function setTitle($title)
     {
         if (is_string($title))
-            $this->_title = $title;
+            $this->title = $title;
     }
 
     /**
@@ -47,7 +47,7 @@ class Post
     public function setBody($body)
     {
         if (is_string($body))
-            $this->_body = $body;
+            $this->body = $body;
     }
 
     /**
@@ -55,7 +55,7 @@ class Post
      */
     public function setCreatedAt($created_at)
     {
-        $this->_created_at = $created_at;
+        $this->created_at = $created_at;
     }
 
     /**
@@ -63,7 +63,7 @@ class Post
      */
     public function getId()
     {
-        return $this->_id;
+        return $this->id;
     }
 
     /**
@@ -71,7 +71,7 @@ class Post
      */
     public function getBody()
     {
-        return $this->_body;
+        return $this->body;
     }
 
     /**
@@ -79,7 +79,7 @@ class Post
      */
     public function getCreatedAt()
     {
-        return $this->_created_at;
+        return $this->created_at;
     }
 
     /**
@@ -87,6 +87,6 @@ class Post
      */
     public function getTitle()
     {
-        return $this->_title;
+        return $this->title;
     }
 }

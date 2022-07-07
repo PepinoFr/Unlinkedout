@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title> {{ t }} </title>
+</head>
+    <p>  {{ post.title }} de {{ post.body }}</p>
+
+{% for comment in comments %}
+    <p>  {{ comment.author }} de {{ comment.body }}</p>
+{% endfor %}
+</html>

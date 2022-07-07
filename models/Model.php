@@ -23,8 +23,50 @@ abstract  class Model
         {
             $var[] = new $obj($data);
         }
+        $req->closeCursor();
+        return $var;
+
+
+    }
+    protected  function  getById($table,$obj,$id){
+
+        $req = $this->getBdd()->prepare('SELECT * FROM '.$table.' WHERE id = '.$id);
+        $req->execute();
+        $data = $req->fetch(PDO::FETCH_ASSOC);
+        $var = new $obj($data);
         return $var;
         $req->closeCursor();
 
+
     }
+
+    protected function getALLComments($table,$obj,$id)
+    {
+        $var = [];
+
+        //echo $id;
+        $req = $this->getBdd()->prepare('SELECT * FROM '.$table.' WHERE post = '.$id);
+        $req->execute();
+        while ($data = $req->fetch(PDO::FETCH_ASSOC))
+        {
+            $var[] = new $obj($data);
+        }
+        $req->closeCursor();
+        return $var;
+
+
+    }
+    protected  function  getUsersbyID($table,$obj,$id){
+
+        $req = $this->getBdd()->prepare('SELECT * FROM '.$table.' WHERE id = '.$id);
+        $req->execute();
+        $data = $req->fetch(PDO::FETCH_ASSOC);
+        $var = new $obj($data);
+        return $var;
+        $req->closeCursor();
+
+
+    }
+
+
 }

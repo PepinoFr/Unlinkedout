@@ -1,19 +1,40 @@
 <?php
+require_once(ABSPATH . '/vendor/autoload.php');
+/*$loader = new \Twig\Loader\FilesystemLoader(ABSPATH . '/views/twig');
+$twig = new \Twig\Environment($loader, [
+    'cache' => ABSPATH . '/twigcache'
+]);
+$twig->load('test.twig');
+echo $twig->render('test.twig', ['firstname' => 'Pépino']);
+die();*/
 class View
 {
     private $_file;
     private $_t;
+    private $loader;
+    private $twig;
+    private $action;
 
     public function __construct($action)
     {
-        $this->_file = 'views/view'.$action.'.php';
+        $this->action = $action;
+        $this->_file = 'views/view'.$action.'.twig';
+        $this->loader = new \Twig\Loader\FilesystemLoader(ABSPATH . '/views');
+        $this->twig = new \Twig\Environment($this->loader, [
+            'cache' => false
+        ]);
+        $this->twig->load('view'.$action.'.twig');
+
 
     }
     public function generate($data)
     {
-        $content = $this->generateFile($this->_file,$data);
-        $view =$this->generateFile('views/template.php',array('t'=> $this->_t,'content'=> $content));
-        echo $view;
+
+        echo $this->twig->render('viewMenu.twig',$data);
+        echo $this->twig->render('view'.$this->action.'.twig', $data);
+      //  $content = $this->generateFile($this->_file,$data);
+       // $view =$this->generateFile('views/template.php',array('t'=> $this->_t,'content'=> $content));
+       // echo $view;
     }
 
     private function generateFile($file,$data)
