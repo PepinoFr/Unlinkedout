@@ -1,0 +1,25 @@
+{% if exist  %}
+    <div role="alert">
+        <div class="bg-red-500 text-white font-bold rounded-t px-4 py-2">
+            Erreur
+        </div>
+        <div class="border border-t-0 border-red-400 rounded-b bg-red-100 px-4 py-3 text-red-700">
+            <p>L'adresse mail existe deja </p>
+        </div>
+    </div>
+{% endif %}
+
+
+<form action="" method="post">
+    <div class="form-group">
+        <input class="form-control" type="text" name="pseudo" placeholder="pseudo">
+    </div>
+    <div class="form-group">
+        <input class="form-control" type="text" name="email" placeholder="email">
+    </div>
+    <div class="form-group">
+        <input class="form-control" type="password" name="password" placeholder="Votre mot de passe">
+    </div>
+    <button type="submit" class="btn btn-primary"> s'inscrire</button>
+
+</form>

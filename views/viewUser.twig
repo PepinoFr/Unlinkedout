@@ -4,6 +4,31 @@
     <meta charset="UTF-8">
     <title> {{ t }} </title>
 </head>
-<p>  {{ user.name }} de {{ user.email }}</p>
+<table class="border-collapse border border-slate-500 ...">
+    <thead>
+    <tr>
+        <th class="border border-slate-600 ...">pseudo</th>
+        <th class="border border-slate-600 ...">{{ user.name }}</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="border border-slate-700 ...">prenom</td>
+        <td class="border border-slate-700 ...">{{ user.firstname }}</td>
+    </tr>
+    <tr>
+        <td class="border border-slate-700 ...">nom</td>
+        <td class="border border-slate-700 ...">{{  user.lastname}}</td>
+    </tr>
+    <tr>
+        <td class="border border-slate-700 ...">email</td>
+        <td class="border border-slate-700 ...">{{ user.email }}</td>
+    </tr>
+    <tr>
+        <td class="border border-slate-700 ..."><a href="http://localhost/Unlinkedout/user/{{user.id}}/modify">modifer</a></td>
+        <td class="border border-slate-700 ..."><a href="http://localhost/Unlinkedout/user/{{user.id}}/delete">supprimer</a></td>
+    </tr>
+    </tbody>
+</table>
 
 </html>
