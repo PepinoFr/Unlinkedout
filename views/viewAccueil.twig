@@ -9,9 +9,10 @@
 </header>
 <body>
 {% for post in posts %}
-<p>  {{ post.title }} de {{ post.body }}</p>
+<p> <a href="http://localhost/Unlinkedout/post/{{post.id}}">{{ post.title }} de {{ post.body }} </a>  </p>
 {% endfor %}
 
+<a href="http://localhost/Unlinkedout/accueil/create"> Créer un post</a>
 </body>
 <footer>
 

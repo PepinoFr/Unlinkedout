@@ -14,6 +14,13 @@ function user_connect () {
     }
 }
 
-function emailExist($email) {
+function connect ($user){
+    session_start();
+    $_SESSION['connect'] = $user;
 
 }
+function getConnect(){
+    session_start();
+    return  $_SESSION['connect'];
+}
+

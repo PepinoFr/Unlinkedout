@@ -6,10 +6,10 @@ class PostManager extends Model
         return $this->getAll('post','Post');
     }
 
-    public function insertInto($table,$champs,$value){
+    public function insertInto($table,$fields,$value){
 
         $this->getBdd();
-        return $this->insert($table,$champs,$value);
+        return $this->insert($table,$fields,$value);
 
     }
 
@@ -26,6 +26,10 @@ class PostManager extends Model
         $this->getBdd();
         return $this->getById('post','Post',$id);
     }
+    public function getComment($id) {
+        $this->getBdd();
+        return $this->getById('comments','Comment',$id);
+    }
     public function getComments($id) {
         $this->getBdd();
         return $this->getALLComments('comments','Comment',$id);
@@ -37,6 +41,12 @@ class PostManager extends Model
     public function getUserByEmail($email){
         $this->getBdd();
         return $this->getUserEmail('author','User',$email);
+
+    }
+
+    public function auth($email,$password){
+        $this->getBdd();
+        return $this->getAuth($email,$password);
 
     }
 

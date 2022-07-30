@@ -48,7 +48,6 @@ class ControllerUser
     }
     private function modifyUser($user)
     {
-
         $this->_view = new View('ModifyUser');
         $this->_view->generate(array('t'=>'User','user'=>$user ));
     }

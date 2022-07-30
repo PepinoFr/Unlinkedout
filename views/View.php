@@ -7,6 +7,7 @@ $twig = new \Twig\Environment($loader, [
 $twig->load('test.twig');
 echo $twig->render('test.twig', ['firstname' => 'Pépino']);
 die();*/
+require_once ('functions/auth.php');
 class View
 {
     private $_file;
@@ -30,6 +31,11 @@ class View
     public function generate($data)
     {
 
+        $user = getConnect();
+        if ( !empty($user)) {
+            $data['idUser'] = $user->getID();
+            $data['role'] =$user->getRole();
+        }
         echo $this->twig->render('viewMenu.twig',$data);
         echo $this->twig->render('view'.$this->action.'.twig', $data);
       //  $content = $this->generateFile($this->_file,$data);

@@ -36,10 +36,7 @@ abstract  class Model
         $var = new $obj($data);
         return $var;
         $req->closeCursor();
-
-
     }
-
     protected function getALLComments($table,$obj,$id)
     {
         $var = [];
@@ -78,9 +75,10 @@ abstract  class Model
         $req->closeCursor();
     }
 
-    protected  function insert($table,$champs,$value) {
-        $req = $this->getBdd()->prepare("INSERT INTO ".$table." ( ".$champs. " ) VALUES (".$value .");" );
+    protected  function insert($table,$fields,$value) {
+        $req = $this->getBdd()->prepare("INSERT INTO ".$table." ( ".$fields. " ) VALUES (".$value .");" );
         $req->execute();
+        return $req;
     }
 
     protected  function modify($table,$id,$value) {
@@ -90,6 +88,19 @@ abstract  class Model
     protected  function remove($table,$id) {
         $req = $this->getBdd()->prepare("DELETE from ".$table." WHERE id = " . $id );
         $req->execute();
+    }
+    protected function  getAuth($email,$password){
+        $req = $this->getBdd()->prepare("SELECT * FROM author WHERE email = '".$email ."' AND password= '".$password."'");
+        $req->execute();
+        $data = $req->fetch(PDO::FETCH_ASSOC);
+        if (!empty($data)) {
+            $var = new User($data);
+            return $var;
+        }
+        else {
+            return null;
+        }
+        $req->closeCursor();
     }
 
 

@@ -6,7 +6,12 @@
 </head>
     <p>  {{ post.title }} de {{ post.body }}</p>
 
+<a href="http://localhost/Unlinkedout/post/{{post.id}}/delete">supprimer</a>
+<a href="http://localhost/Unlinkedout/post/{{post.id}}/modify">modifier</a>
+
 {% for comment in comments %}
     <p>  {{ comment.author }} de {{ comment.body }}</p>
+    <a href="http://localhost/Unlinkedout/post/{{post.id}}/{{comment.id}}/delete">supprimer</a>
+    <a href="http://localhost/Unlinkedout/post/{{post.id}}/{{comment.id}}/modify">modifier</a>
 {% endfor %}
 </html>
