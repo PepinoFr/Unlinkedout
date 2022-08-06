@@ -1,5 +1,6 @@
 <?php
 require_once ('views/View.php');
+require_once ('functions/auth.php');
 class ControllerUser
 {
     private $_postManager;
@@ -15,19 +16,25 @@ class ControllerUser
         else {
             $id = intval($url[1]);
             $this->_postManager = new PostManager;
-            $user = $this->_postManager->getUsers($id);
+            $author = $this->_postManager->getUsers($id);
+            $user = getConnect();
             if (empty($_POST)) {
                 if (!empty($url[2])) {
-                    if ($url[2]  == "modify") {
-                        $this->modifyUser($user);
+                    if ($author->getId()== $user->getId() || $user->getRole() == 2) {
+                        if ($url[2]  == "modify") {
+                            $this->modifyUser($author);
+                        }
+                        else if ($url[2]  == "delete") {
+                            $this->_postManager->delete('author',$id);
+                            exit( header('Location: http://localhost/Unlinkedout/accueil'));
+                        }
                     }
-                    else if ($url[2]  == "delete") {
-                        $this->_postManager->delete('author',$id);
-                        exit( header('Location: http://localhost/Unlinkedout/accueil'));
+                    else {
+                        $this->Unauthorized();
                     }
                 }
                 else {
-                    $this->post($user);
+                    $this->post($author);
                 }
             }
             else {
@@ -36,19 +43,21 @@ class ControllerUser
                 $this->_postManager->update('author',$id,$value);
                 exit( header('Location: http://localhost/Unlinkedout/user/'.$id));
             }
-
         }
 
     }
-    private function post($user)
+    private function post($author)
     {
-
         $this->_view = new View('User');
-        $this->_view->generate(array('t'=>'User','user'=>$user ));
+        $this->_view->generate(array('t'=>'Author','author'=>$author ));
     }
-    private function modifyUser($user)
+    private function modifyUser($author)
     {
         $this->_view = new View('ModifyUser');
-        $this->_view->generate(array('t'=>'User','user'=>$user ));
+        $this->_view->generate(array('t'=>'Author','author'=>$author ));
+    }
+    private function Unauthorized(){
+        $this->_view = new View('Unauthorized');
+        $this->_view->generate(array('t'=>'Unauthorized' ));
     }
 }

@@ -34,7 +34,7 @@ class View
         $user = getConnect();
         if ( !empty($user)) {
             $data['idUser'] = $user->getID();
-            $data['role'] =$user->getRole();
+            $data['role']   = $user->getRole();
         }
         echo $this->twig->render('viewMenu.twig',$data);
         echo $this->twig->render('view'.$this->action.'.twig', $data);

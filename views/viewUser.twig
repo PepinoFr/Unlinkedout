@@ -8,25 +8,28 @@
     <thead>
     <tr>
         <th class="border border-slate-600 ...">pseudo</th>
-        <th class="border border-slate-600 ...">{{ user.name }}</th>
+        <th class="border border-slate-600 ...">{{ author.name }}</th>
     </tr>
     </thead>
     <tbody>
     <tr>
         <td class="border border-slate-700 ...">prenom</td>
-        <td class="border border-slate-700 ...">{{ user.firstname }}</td>
+        <td class="border border-slate-700 ...">{{ author.firstname }}</td>
     </tr>
     <tr>
         <td class="border border-slate-700 ...">nom</td>
-        <td class="border border-slate-700 ...">{{  user.lastname}}</td>
+        <td class="border border-slate-700 ...">{{  author.lastname}}</td>
     </tr>
     <tr>
         <td class="border border-slate-700 ...">email</td>
-        <td class="border border-slate-700 ...">{{ user.email }}</td>
+        <td class="border border-slate-700 ...">{{ author.email }}</td>
     </tr>
     <tr>
-        <td class="border border-slate-700 ..."><a href="http://localhost/Unlinkedout/user/{{user.id}}/modify">modifer</a></td>
-        <td class="border border-slate-700 ..."><a href="http://localhost/Unlinkedout/user/{{user.id}}/delete">supprimer</a></td>
+        {% if idUser == author.id or role == 2  %}
+            <td class="border border-slate-700 ..."><a href="http://localhost/Unlinkedout/user/{{author.id}}/modify">modifer</a></td>
+            <td class="border border-slate-700 ..."><a href="http://localhost/Unlinkedout/user/{{author.id}}/delete">supprimer</a></td>
+        {% endif %}
+
     </tr>
     </tbody>
 </table>

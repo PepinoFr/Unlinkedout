@@ -26,7 +26,6 @@ class Router
                 $controllerFile = "controllers/".$controllerClass.".php";
 
                 if(file_exists($controllerFile)){
-
                     require_once ($controllerFile);
                     $this->_ctrl = new $controllerClass($url);
                 }

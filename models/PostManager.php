@@ -1,18 +1,16 @@
 <?php
 class PostManager extends Model
 {
+    // to do faire plusieur model
     public function getPosts(){
         $this->getBdd();
         return $this->getAll('post','Post');
     }
 
     public function insertInto($table,$fields,$value){
-
         $this->getBdd();
         return $this->insert($table,$fields,$value);
-
     }
-
     public function update($table,$id,$value) {
         $this->getBdd();
         return $this->modify($table,$id,$value);
@@ -21,7 +19,6 @@ class PostManager extends Model
         $this->getBdd();
         return $this->remove($table,$id);
     }
-
     public function getPost($id){
         $this->getBdd();
         return $this->getById('post','Post',$id);
@@ -33,6 +30,10 @@ class PostManager extends Model
     public function getComments($id) {
         $this->getBdd();
         return $this->getALLComments('comments','Comment',$id);
+    }
+    public function getValide($id) {
+        $this->getBdd();
+        return $this->getCommentsValide('comments','Comment',$id);
     }
     public function getUsers($id) {
         $this->getBdd();

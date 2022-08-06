@@ -34,14 +34,13 @@ abstract  class Model
         $req->execute();
         $data = $req->fetch(PDO::FETCH_ASSOC);
         $var = new $obj($data);
-        return $var;
         $req->closeCursor();
+        return $var;
+
     }
     protected function getALLComments($table,$obj,$id)
     {
         $var = [];
-
-        //echo $id;
         $req = $this->getBdd()->prepare('SELECT * FROM '.$table.' WHERE post = '.$id);
         $req->execute();
         while ($data = $req->fetch(PDO::FETCH_ASSOC))
@@ -50,17 +49,28 @@ abstract  class Model
         }
         $req->closeCursor();
         return $var;
-
-
     }
+    protected function getCommentsValide($table,$obj,$id)
+    {
+        $var = [];
+        $req = $this->getBdd()->prepare('SELECT * FROM '.$table.' WHERE post = '.$id . ' AND valide = 1');
+        $req->execute();
+        while ($data = $req->fetch(PDO::FETCH_ASSOC))
+        {
+            $var[] = new $obj($data);
+        }
+        $req->closeCursor();
+        return $var;
+    }
+
     protected  function  getUsersbyID($table,$obj,$id){
 
         $req = $this->getBdd()->prepare('SELECT * FROM '.$table.' WHERE id = '.$id);
         $req->execute();
         $data = $req->fetch(PDO::FETCH_ASSOC);
         $var = new $obj($data);
-        return $var;
         $req->closeCursor();
+        return $var;
 
     }
     protected  function  getUserEmail($table,$obj,$email){
@@ -71,8 +81,9 @@ abstract  class Model
         if (!empty($data)) {
             $var = new $obj($data);
         }
-        return $var;
         $req->closeCursor();
+        return $var;
+
     }
 
     protected  function insert($table,$fields,$value) {
@@ -81,18 +92,21 @@ abstract  class Model
         return $req;
     }
 
-    protected  function modify($table,$id,$value) {
+    protected function modify($table,$id,$value) {
         $req = $this->getBdd()->prepare("UPDATE ".$table." SET ". $value ." WHERE id = " . $id );
         $req->execute();
     }
-    protected  function remove($table,$id) {
+
+    protected function remove($table,$id) {
         $req = $this->getBdd()->prepare("DELETE from ".$table." WHERE id = " . $id );
         $req->execute();
     }
-    protected function  getAuth($email,$password){
+
+    protected function getAuth($email,$password){
         $req = $this->getBdd()->prepare("SELECT * FROM author WHERE email = '".$email ."' AND password= '".$password."'");
         $req->execute();
         $data = $req->fetch(PDO::FETCH_ASSOC);
+        $req->closeCursor();
         if (!empty($data)) {
             $var = new User($data);
             return $var;
@@ -100,10 +114,6 @@ abstract  class Model
         else {
             return null;
         }
-        $req->closeCursor();
+
     }
-
-
-
-
 }

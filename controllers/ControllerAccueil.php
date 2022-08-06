@@ -21,7 +21,13 @@ class ControllerAccueil
                 exit( header('Location: http://localhost/Unlinkedout/accueil'));
             }
             else {
-                $this->createPost();
+                $user = getConnect();
+                if ( !empty($user)) {
+                    $this->createPost();
+                }
+                else {
+                    // TO MESSAGE D4EREUR
+                }
             }
         }
         else

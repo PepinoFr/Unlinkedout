@@ -12,7 +12,9 @@
 <p> <a href="http://localhost/Unlinkedout/post/{{post.id}}">{{ post.title }} de {{ post.body }} </a>  </p>
 {% endfor %}
 
-<a href="http://localhost/Unlinkedout/accueil/create"> Créer un post</a>
+{% if idUser is not  empty %}
+   <a href="http://localhost/Unlinkedout/accueil/create"> Créer un post</a>
+{% endif %}
 </body>
 <footer>
 

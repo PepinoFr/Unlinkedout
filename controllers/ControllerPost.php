@@ -1,5 +1,6 @@
 <?php
 require_once ('views/View.php');
+require_once ('functions/auth.php');
 class ControllerPost
 {
     private $_postManager;
@@ -15,10 +16,33 @@ class ControllerPost
         }
         $id = intval($url[1]);
         $date = date("Y-n-j");
-        if ( !empty($url[2]) )  {
-            if($url[2] == 'delete') {
-                $this->_postManager->delete('post',$id);
-                exit( header('Location: http://localhost/Unlinkedout/accueil'));
+        $user = getConnect();
+        if ( !empty($url[2]) && !empty($user) )  {
+            $post = $this->_postManager->getPost($id);
+            if($url[2] == 'delete' ) {
+                if (authorized($user,$post)) {
+                    $this->_postManager->delete('post',$id);
+                    exit( header('Location: http://localhost/Unlinkedout/accueil'));
+                }
+                else {
+                    $this->Unauthorized();
+                }
+
+            }
+            else if ($url[2] == 'modify') {
+                if (authorized($user,$post)) {
+                    if(empty($_POST)) {
+                        $this->modifyPost($post);
+                    }
+                    else {
+                        $value ="body = '".$_POST["body"]."', updated_at = '".$date."'";
+                        $this->_postManager->update('post',$id,$value);
+                        exit( header('Location: http://localhost/Unlinkedout/post/'.$id));
+                    }
+                }
+                else {
+                    $this->Unauthorized();
+                }
             }
             else if ($url[2] == 'create') {
                 if (!empty($_POST)) {
@@ -31,37 +55,44 @@ class ControllerPost
                     $this->createComment();
                 }
             }
-            else if ($url[2] == 'modify') {
-                if(empty($_POST)) {
-                    $post = $this->_postManager->getPost($id);
-                    $this->modifyPost($post);
-                }
-                else {
-                    $value ="body = '".$_POST["body"]."', updated_at = '".$date."'";
-                    $this->_postManager->update('post',$id,$value);
-                    exit( header('Location: http://localhost/Unlinkedout/post/'.$id));
-                }
-            }
             if (is_numeric($url[2])) {
                 $idC = intval($url[2]);
-                if ($url[3] == 'delete') {
-                    $this->_postManager->delete('comments',$idC);
-                    exit( header('Location: http://localhost/Unlinkedout/post/'.$id));
-                }
-                else if( $url[3] == 'modify'){
-                    if(empty($_POST)) {
-                        $comment = $this->_postManager->getComment($idC);
-                        $this->modifyComments($comment);
+                $comment = $this->_postManager->getComment($idC);
+                if ($url[3] == 'delete' ) {
+                    if ( authorized($user,$comment)) {
+                        $this->_postManager->delete('comments',$idC);
+                        exit( header('Location: http://localhost/Unlinkedout/post/'.$id));
                     }
                     else {
-                        $value ="body = '".$_POST["body"]."', updated_at = '".$date."'";
+                        $this->Unauthorized();
+                    }
+                }
+                else if( $url[3] == 'modify' ){
+                    if (authorized($user,$comment)) {
+                        if(empty($_POST)) {
+                            $this->modifyComments($comment);
+                        }
+                        else {
+                            $value ="body = '".$_POST["body"]."', updated_at = '".$date."'";
+                            $this->_postManager->update('comments',$idC,$value);
+                            exit( header('Location: http://localhost/Unlinkedout/post/'.$id));
+                        }
+                    }
+                    else {
+                        $this->Unauthorized();
+                    }
+                }
+                else if ( $url[3] == 'valide') {
+                    if (authorized($user,$post)) {
+                        $value = "valide = '1'";
                         $this->_postManager->update('comments',$idC,$value);
                         exit( header('Location: http://localhost/Unlinkedout/post/'.$id));
                     }
-
+                    else {
+                        $this->Unauthorized();
+                    }
                 }
             }
-
         }
         else {
             $this->post($id);
@@ -71,7 +102,14 @@ class ControllerPost
     private function post($id)
     {
         $post = $this->_postManager->getPost($id);
-        $comments = $this->_postManager->getComments($id);
+        $user = getConnect();
+        if ($user->getRole() == 2 || $user->getID() == $post->getAuthor() ) {
+            $comments = $this->_postManager->getComments($id);
+        }
+        else {
+            $comments = $this->_postManager->getValide($id);
+        }
+
         
         $this->_view = new View('Post');
 
@@ -91,5 +129,9 @@ class ControllerPost
     {
         $this->_view = new View('ModifyPost');
         $this->_view->generate(array('t'=>'modifier post','post'=>$post ));
+    }
+    private function Unauthorized(){
+        $this->_view = new View('Unauthorized');
+        $this->_view->generate(array('t'=>'Unauthorized' ));
     }
 }

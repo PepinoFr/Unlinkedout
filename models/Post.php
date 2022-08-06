@@ -5,6 +5,8 @@ class Post
     private $title;
     private $body;
     private $created_at;
+    private $updated_at;
+    private $author;
 
     public function __construct(array $data)
     {
@@ -15,7 +17,6 @@ class Post
         foreach ($data as $key => $value)
         {
             $method= 'set'.ucfirst($key);
-
             if(method_exists($this,$method))
                 $this->$method($value);
         }
@@ -53,7 +54,7 @@ class Post
     /**
      * @param mixed $created_at
      */
-    public function setCreatedAt($created_at)
+    public function setCreated_at($created_at)
     {
         $this->created_at = $created_at;
     }
@@ -69,6 +70,38 @@ class Post
     /**
      * @return mixed
      */
+    public function getUpdated_at()
+    {
+        return $this->updated_at;
+    }
+
+    /**
+     * @param mixed $updated_at
+     */
+    public function setUpdated_at($updated_at): void
+    {
+        $this->updated_at = $updated_at;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAuthor()
+    {
+        return $this->author;
+    }
+
+    /**
+     * @param mixed $author
+     */
+    public function setAuthor($author): void
+    {
+        $this->author = $author;
+    }
+
+    /**
+     * @return mixed
+     */
     public function getBody()
     {
         return $this->body;
@@ -77,7 +110,7 @@ class Post
     /**
      * @return mixed
      */
-    public function getCreatedAt()
+    public function getCreated_at()
     {
         return $this->created_at;
     }
