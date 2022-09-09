@@ -25,8 +25,6 @@ abstract  class Model
         }
         $req->closeCursor();
         return $var;
-
-
     }
     protected  function  getById($table,$obj,$id){
 
@@ -36,12 +34,24 @@ abstract  class Model
         $var = new $obj($data);
         $req->closeCursor();
         return $var;
+    }
+    protected  function  getByauthor($table,$obj,$id){
+
+        $req = $this->getBdd()->prepare('SELECT * FROM '.$table.' WHERE author = '.$id);
+        $req->execute();
+        $var = array();
+        while ($data = $req->fetch(PDO::FETCH_ASSOC))
+        {
+            $var[] = new $obj($data);
+        }
+        $req->closeCursor();
+        return $var;
 
     }
     protected function getALLComments($table,$obj,$id)
     {
-        $var = [];
-        $req = $this->getBdd()->prepare('SELECT * FROM '.$table.' WHERE post = '.$id);
+        $var = array();
+        $req = $this->getBdd()->prepare('SELECT * FROM '.$table.' WHERE post = '.$id .' ORDER BY id desc');
         $req->execute();
         while ($data = $req->fetch(PDO::FETCH_ASSOC))
         {
@@ -62,9 +72,7 @@ abstract  class Model
         $req->closeCursor();
         return $var;
     }
-
     protected  function  getUsersbyID($table,$obj,$id){
-
         $req = $this->getBdd()->prepare('SELECT * FROM '.$table.' WHERE id = '.$id);
         $req->execute();
         $data = $req->fetch(PDO::FETCH_ASSOC);
@@ -85,7 +93,6 @@ abstract  class Model
         return $var;
 
     }
-
     protected  function insert($table,$fields,$value) {
         $req = $this->getBdd()->prepare("INSERT INTO ".$table." ( ".$fields. " ) VALUES (".$value .");" );
         $req->execute();
@@ -115,5 +122,16 @@ abstract  class Model
             return null;
         }
 
+    }
+    protected function getUsersToValide() {
+        $var = [];
+        $req = $this->getBdd()->prepare('SELECT * FROM author WHERE  role = 0');
+        $req->execute();
+        while ($data = $req->fetch(PDO::FETCH_ASSOC))
+        {
+            $var[] = new User($data);
+        }
+        $req->closeCursor();
+        return $var;
     }
 }

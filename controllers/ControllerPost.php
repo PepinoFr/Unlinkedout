@@ -35,7 +35,7 @@ class ControllerPost
                         $this->modifyPost($post);
                     }
                     else {
-                        $value ="body = '".$_POST["body"]."', updated_at = '".$date."'";
+                        $value ="body = '".$_POST["body"]."', updated_at = '".$date."'".", title = '".$_POST["title"]."', header = '".$_POST["header"]."'";
                         $this->_postManager->update('post',$id,$value);
                         exit( header('Location: http://localhost/Unlinkedout/post/'.$id));
                     }
@@ -46,12 +46,13 @@ class ControllerPost
             }
             else if ($url[2] == 'create') {
                 if (!empty($_POST)) {
-                    $fields = "created_at,body,post,updated_at,author"; // to do author est la personne connecte
-                    $value = "'" . $date . "','" . $_POST['body'] . "','" . $id . "','" . $date . "','1'";
+                    $fields = "created_at,body,post,updated_at,author";
+                    $value = "'" . $date . "','" . $_POST['body'] . "','" . $id . "','" . $date . "',".$user->getId();
                     $this->_postManager->insertInto('comments',$fields,$value);
                     exit( header('Location: http://localhost/Unlinkedout/post/'.$id));
                 }
                 else {
+                    if ($user->getRole() > 0)
                     $this->createComment();
                 }
             }
@@ -73,7 +74,7 @@ class ControllerPost
                             $this->modifyComments($comment);
                         }
                         else {
-                            $value ="body = '".$_POST["body"]."', updated_at = '".$date."'";
+                            $value ="body = '".$_POST["body"]."', updated_at = '".$date."', valide = 0 ";
                             $this->_postManager->update('comments',$idC,$value);
                             exit( header('Location: http://localhost/Unlinkedout/post/'.$id));
                         }
@@ -103,7 +104,7 @@ class ControllerPost
     {
         $post = $this->_postManager->getPost($id);
         $user = getConnect();
-        if ($user->getRole() == 2 || $user->getID() == $post->getAuthor() ) {
+        if (!empty($user) && ($user->getRole() == 2 || $user->getID() == $post->getAuthor()) ) {
             $comments = $this->_postManager->getComments($id);
         }
         else {

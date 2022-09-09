@@ -7,6 +7,7 @@ class Post
     private $created_at;
     private $updated_at;
     private $author;
+    private $header;
 
     public function __construct(array $data)
     {
@@ -122,4 +123,21 @@ class Post
     {
         return $this->title;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getHeader()
+    {
+        return $this->header;
+    }
+
+    /**
+     * @param mixed $header
+     */
+    public function setHeader($header): void
+    {
+        $this->header = $header;
+    }
+
 }

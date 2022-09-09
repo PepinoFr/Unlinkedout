@@ -1,4 +1,6 @@
 <?php
+// Date + traduction twig
+use Twig\Extra\Intl\IntlExtension;
 require_once(ABSPATH . '/vendor/autoload.php');
 /*$loader = new \Twig\Loader\FilesystemLoader(ABSPATH . '/views/twig');
 $twig = new \Twig\Environment($loader, [
@@ -24,6 +26,7 @@ class View
         $this->twig = new \Twig\Environment($this->loader, [
             'cache' => false
         ]);
+        $this->twig->addExtension(new IntlExtension());
         $this->twig->load('view'.$action.'.twig');
 
 
@@ -35,6 +38,7 @@ class View
         if ( !empty($user)) {
             $data['idUser'] = $user->getID();
             $data['role']   = $user->getRole();
+            $data['avatar'] = $user->getAvatar();
         }
         echo $this->twig->render('viewMenu.twig',$data);
         echo $this->twig->render('view'.$this->action.'.twig', $data);

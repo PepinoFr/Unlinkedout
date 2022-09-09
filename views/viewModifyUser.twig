@@ -4,29 +4,88 @@
     <meta charset="UTF-8">
     <title> {{ t }} </title>
 </head>
-<form action="" method="post">
-    <div class="form-group">
-        <p> pseudo </p>
-        <input class="form-control" type="text" name="name"  value="{{ user.name }}">
-    </div>
-    <div class="form-group">
-        <p> prenom </p>
-        <input class="form-control" type="text" name="firstname"  value="{{ user.firstname }}">
-    </div>
-    <div class="form-group">
-        <p> nom </p>
-        <input class="form-control" type="text" name="lastname"  value="{{ user.lastname }}">
-    </div>
-    <div class="form-group">
-        <p> email </p>
-        <input class="form-control" type="text" name="email"  value="{{ user.email }}">
-    </div>
-    <div class="form-group">
-        <p> password </p>
-        <input class="form-control" type="password" name="password" value="{{ user.password }}">
-    </div>
-    <button type="submit" class="btn btn-primary"> modifier</button>
 
-</form>
-
+    <div class="w-full md:w-96 md:max-w-full mx-auto">
+        <div class="p-6 border border-gray-300 sm:rounded-md">
+            <form action="" method="post" enctype="multipart/form-data">
+                <label class="block mb-6">
+                    <span class="text-gray-700">Pseudo</span>
+                    <input type="text" name="name"
+                           class="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 "
+                           value="{{ author.name }}"/>
+                </label>
+                <label class="block mb-6">
+                    <span class="text-gray-700">Prénom</span>
+                    <input type="text" name="firstname"
+                           class="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 "
+                           value="{{ author.firstname }}"/>
+                    <span class="text-gray-700">Nom</span>
+                    <input type="text" name="lastname"
+                           class="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 "
+                           value="{{ author.lastname }}"/>
+                </label>
+                <label class="block mb-6">
+                    <span class="text-gray-700">description</span>
+                    <textarea
+                            name="description"
+                            class=" block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 "
+                            rows="3"
+                    > {{ author.description }}</textarea>
+                </label>
+                <label class="block mb-6">
+                    <span class="text-gray-700">email</span>
+                    <input type="text" name="email"
+                           class="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 "
+                           value="{{ author.email }}"/>
+                </label>
+                    <label class="block mb-6">
+                        <span class="text-gray-700">password</span>
+                        <input type="text" name="password"
+                               class="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 "
+                               value="{{ author.password }}"/>
+                    </label>
+                    <label class="block mb-6">
+                        <span class="text-gray-700">avatar</span>
+                        <input type="file" name="avatar"
+                               class="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 "
+                               />
+                    </label>
+                    <label class="block mb-6">
+                        <span class="text-gray-700">cv</span>
+                        <input type="file" name="cv"
+                               class="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 "
+                        />
+                    </label>
+                    <label class="block mb-6">
+                        <span class="text-gray-700">facebook</span>
+                        <input type="text" name="fb"
+                               class="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 "
+                               value="{{ author.link[0] }}"/>
+                        <span class="text-gray-700">twitter</span>
+                        <input type="text" name="twitter"
+                               class="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 "
+                               value="{{ author.link[1]}}"/>
+                        <span class="text-gray-700">git</span>
+                        <input type="text" name="git"
+                               class="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 "
+                               value="{{ author.link[2]}}"/>
+                        <span class="text-gray-700">instagram</span>
+                        <input type="text" name="inst"
+                               class="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 "
+                               value="{{ author.link[3]}}"/>
+                        <span class="text-gray-700">youtube</span>
+                        <input type="text" name="ytb"
+                               class="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 "
+                               value="{{ author.link[4]}}"/>
+                    </label>
+                <div class="mb-6">
+                    <button
+                            type="submit"
+                            class=" h-10 px-5 text-indigo-100 bg-indigo-700 rounded-lg transition-colors duration-150 focus:shadow-outline hover:bg-indigo-800 ">
+                        Modifier
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
 </html>

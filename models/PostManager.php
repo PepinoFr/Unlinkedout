@@ -35,20 +35,5 @@ class PostManager extends Model
         $this->getBdd();
         return $this->getCommentsValide('comments','Comment',$id);
     }
-    public function getUsers($id) {
-        $this->getBdd();
-        return $this->getUsersbyID('author','User',$id);
-    }
-    public function getUserByEmail($email){
-        $this->getBdd();
-        return $this->getUserEmail('author','User',$email);
-
-    }
-
-    public function auth($email,$password){
-        $this->getBdd();
-        return $this->getAuth($email,$password);
-
-    }
 
 }

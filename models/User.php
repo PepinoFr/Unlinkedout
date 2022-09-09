@@ -11,6 +11,23 @@ class User {
     private $cv;
     private $link;
     private $role;
+    private $avatar;
+
+    /**
+     * @return mixed
+     */
+    public function getAvatar()
+    {
+        return $this->avatar;
+    }
+
+    /**
+     * @param mixed $avatar
+     */
+    public function setAvatar($avatar): void
+    {
+        $this->avatar = $avatar;
+    }
 
     public function __construct(array $data)
     {
@@ -27,7 +44,6 @@ class User {
         }
 
     }
-
     /**
      * @return mixed
      */
@@ -169,7 +185,8 @@ class User {
      */
     public function setLink($link): void
     {
-        $this->link = $link;
+        $links = explode("/", $link);
+        $this->link = $links;
     }
 
     /**

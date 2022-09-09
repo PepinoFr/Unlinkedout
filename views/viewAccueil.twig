@@ -8,16 +8,41 @@
 
 </header>
 <body>
+
+{% if role > 0 %}
+<div class="flex justify-center sm:justify-end">
+   <a class="mt-4 sm:mr-4" href="http://localhost/Unlinkedout/accueil/create">
+      <div class="flex justify-center items-center px-4 py-2 rounded-lg bg-blue-900 hover:bg-blue-800 hover:scale-[1.02] duration-300 cursor-pointer text-white">
+         Créer un post
+         <svg class="w-5 h-5 ml-2 mt-[0.2rem]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+         </svg>
+      </div>
+   </a>
+</div>
+{% endif %}
 {% for post in posts %}
-<p> <a href="http://localhost/Unlinkedout/post/{{post.id}}">{{ post.title }} de {{ post.body }} </a>  </p>
+   <div class="p-10">
+         <!--Card 1-->
+      <div class="w-full lg:max-w-full lg:flex border-r border-b border-l rounded-lg border-gray-400 lg:border-t lg:border-gray-400 shadow-md hover:bg-gray-100 duration-150">
+         <a class="h-48 lg:h-auto lg:w-48 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden" style="background-image: url('avatars/{{ post.author }}.jpg')" href="http://localhost/Unlinkedout/user/{{post.author}}">  </a>
+         <a class="w-full" href="http://localhost/Unlinkedout/post/{{post.id}}">
+            <div class="rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-col justify-between leading-normal">
+               <div class="mb-8">
+                  <div class="text-gray-900 font-bold text-xl mb-2">{{ post.title }}</div>
+                     <p class="text-gray-700 text-base">{{ post.header }}</p>
+                  </div>
+                  <div class="flex items-center">
+                     <div class="text-sm">
+                        <p class="text-gray-600"> Dernière modification le {{ post.updated_at|format_datetime(locale='fr',pattern="EEEE dd MMMM YYYY") }} </p>
+                     </div>
+                  </div>
+            </div>
+         </a>
+      </div>
+   </div>
 {% endfor %}
 
-{% if idUser is not  empty %}
-   <a href="http://localhost/Unlinkedout/accueil/create"> Créer un post</a>
-{% endif %}
 </body>
-<footer>
-
-</footer>
 </html>
 

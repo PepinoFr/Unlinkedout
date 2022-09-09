@@ -12,21 +12,21 @@ class ControllerAccueil
         if (empty($url)) {
             throw new Exception('Page introuvable');
         }
+        $user = getConnect();
         if (!empty($url[1]) && $url[1] == "create") {
             if (!empty($_POST)) {
-                $fields = "title,body,updated_at,created_at,author"; // to do author est la personne connecte
+                $fields = "title,body,updated_at,created_at,author,header"; // to do author est la personne connecte
                 $date = date("Y-n-j");
-                $value = "'".$_POST['title']."','".$_POST['body']."','".$date."','".$date."','1'";
+                $value = "'".$_POST['title']."','".$_POST['body']."','".$date."','".$date."',".$user->getId().",'".$_POST['header']."'";
                 $this->_postManager->insertInto('post',$fields,$value);
                 exit( header('Location: http://localhost/Unlinkedout/accueil'));
             }
             else {
-                $user = getConnect();
-                if ( !empty($user)) {
+                if ( !empty($user) && $user->getRole() > 0 ) {
                     $this->createPost();
                 }
                 else {
-                    // TO MESSAGE D4EREUR
+                    $this->Unauthorized();
                 }
             }
         }
@@ -44,6 +44,10 @@ class ControllerAccueil
     private function  createPost() {
         $this->_view = new View('RegisterPost');
         $this->_view->generate(array('t' => 'créer Post' ));
+    }
+    private function Unauthorized(){
+        $this->_view = new View('Unauthorized');
+        $this->_view->generate(array('t'=>'Unauthorized' ));
     }
 
 

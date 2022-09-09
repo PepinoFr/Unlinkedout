@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title> {{ t }} </title>
+</head>
+<header>
+
+</header>
+<body>
+<p> <a href="http://localhost/Unlinkedout/post/{{posts.id}}">{{ posts.title }} </p>
+{% for post in posts %}
+    <p> <a href="http://localhost/Unlinkedout/post/{{post.id}}">{{ post.title }}  </a>  </p>
+{% endfor %}
+</body>
+<footer>
+
+</footer>
+</html>
