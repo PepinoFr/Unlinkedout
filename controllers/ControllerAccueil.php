@@ -14,7 +14,7 @@ class ControllerAccueil
         }
         $user = getConnect();
         if (!empty($url[1]) && $url[1] == "create") {
-            if (!empty($this->getPost())) {
+            if (!empty($this->getPost('title'))) {
                 $fields = "title,body,updated_at,created_at,author,header";
                 $date = date("Y-n-j");
                 $value = "'".$this->getPost('title')."','".$this->getPost('body')."','".$date."','".$date."',".$user->getId().",'".$this->getPost('header')."'";
@@ -51,10 +51,14 @@ class ControllerAccueil
     }
 
     private function  getPost($arg='') {
-        if (empty($arg)) {
-            return $_POST;
+        $post = filter_input(INPUT_POST, $arg);
+        if (!empty($post)) {
+            return $post;
         }
-        return $_POST[$arg];
+        else {
+            return '';
+        }
+
 }
 
 }
