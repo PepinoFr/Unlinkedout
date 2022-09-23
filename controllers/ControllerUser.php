@@ -21,7 +21,7 @@ class ControllerUser
                         $this->usersToValide();
                     }
                     else {
-                        $id = intval($url[2]);
+                        $id = (int)$url[2];
                         if (!empty($url[3])) {
                             $value = "role=";
                             if ($url[3] == 'validate') {
@@ -41,7 +41,7 @@ class ControllerUser
                 }else
                     $this->users();
             } else {
-                $id = intval($url[1]);
+                $id = (int)$url[1];
                 $author = $this->_userManager->getUser($id);
                 if (!empty( $this->getPost('name'))) {
                     $value = "name ='" . $this->getPost('name') . "', firstname = '" . $this->getPost('firstname') . "',description = '".$this->getPost('description')."', lastname = '";

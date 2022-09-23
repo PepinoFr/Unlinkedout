@@ -8,9 +8,9 @@
 
 </header>
 <body>
-<p> <a href="http://localhost/Unlinkedout/post/{{posts.id}}">{{ posts.title }} </p>
+<p> <a href="{{url}}{{posts.id}}">{{ posts.title }} </p>
 {% for post in posts %}
-    <p> <a href="http://localhost/Unlinkedout/post/{{post.id}}">{{ post.title }}  </a>  </p>
+    <p> <a href="{{url}}/post/{{post.id}}">{{ post.title }}  </a>  </p>
 {% endfor %}
 </body>
 <footer>

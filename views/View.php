@@ -35,6 +35,7 @@ class View
     {
 
         $user = getConnect();
+        $data['url'] = 'http://localhost/Unlinkedout';
         if ( !empty($user)) {
             $data['idUser'] = $user->getID();
             $data['role']   = $user->getRole();

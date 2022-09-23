@@ -5,9 +5,8 @@
     <title> {{ t }} </title>
 </head>
 <div class="p-10">
-    <!--Card 1-->
     <div class="w-full lg:max-w-full lg:flex border-r border-b border-l rounded-lg border-gray-400 lg:border-t lg:border-gray-400 shadow-md hover:bg-gray-100 duration-150">
-        <a class="h-48 lg:h-auto lg:w-48 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden" style="background-image: url('http://localhost/Unlinkedout/avatars/{{ post.author }}.jpg')" href="http://localhost/Unlinkedout/user/{{post.author}}">  </a>
+        <a class="h-48 lg:h-auto lg:w-48 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden" style="background-image:  url('{{url}}/avatars/{{ post.author }}.jpg')" href="{{url}}/user/{{post.author}}">  </a>
             <div class="rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-col justify-between leading-normal">
                 <div class="mb-8">
                     <div class="text-gray-900 font-bold text-xl mb-2">{{ post.title }}</div>
@@ -25,7 +24,7 @@
 
 {% if idUser is not  empty and role > 0  %}
     <div class="flex justify-center sm:justify-end">
-        <a class="mt-4 sm:mr-4" href="http://localhost/Unlinkedout/post/{{post.id}}/create">
+        <a class="mt-4 sm:mr-4" href="{{url}}/post/{{post.id}}/create">
             <div class="flex justify-center items-center px-4 py-2 rounded-lg bg-blue-900 hover:bg-blue-800 hover:scale-[1.02] duration-300 cursor-pointer text-white">
                 Crée un commentaire
                 <svg class="w-5 h-5 ml-2 mt-[0.2rem]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
@@ -35,7 +34,7 @@
         </a>
 
     {% if idUser == post.author or role == 2  %}
-        <a class="mt-4 sm:mr-4" href="http://localhost/Unlinkedout/post/{{post.id}}/modify">
+        <a class="mt-4 sm:mr-4" href="{{url}}/post/{{post.id}}/modify">
             <div class="flex justify-center items-center px-4 py-2 rounded-lg bg-green-900 hover:bg-green-800 hover:scale-[1.02] duration-300 cursor-pointer text-white">
                 Modifier le post
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
@@ -44,7 +43,7 @@
 
             </div>
         </a>
-        <a class="mt-4 sm:mr-4" href="http://localhost/Unlinkedout/post/{{post.id}}/delete">
+        <a class="mt-4 sm:mr-4" href="{{url}}/post/{{post.id}}/delete">
             <div class="flex justify-center items-center px-4 py-2 rounded-lg bg-red-900 hover:bg-red-800 hover:scale-[1.02] duration-300 cursor-pointer text-white">
                 Supprimer le post
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
@@ -61,7 +60,7 @@
     <div class="p-10">
         <!--Card 1-->
         <div class="w-full lg:max-w-full lg:flex border-r border-b border-l rounded-lg border-gray-400 lg:border-t lg:border-gray-400 shadow-md hover:bg-gray-100 duration-150">
-            <a class="h-48 lg:h-auto lg:w-48 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden" style="background-image: url('http://localhost/Unlinkedout/avatars/{{ comment.author }}.jpg')" href="http://localhost/Unlinkedout/user/{{comment.author}}">  </a>
+            <a class="h-48 lg:h-auto lg:w-48 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden" style="background-image: url('{{url}}/avatars/{{ comment.author }}.jpg')" href="{{url}}/user/{{comment.author}}">  </a>
                 <div class="rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-col justify-between leading-normal">
                     <div class="mb-8">
                         <p class="text-gray-700 text-base">{{ comment.body }}</p>
@@ -78,7 +77,7 @@
         <div class="flex justify-center sm:justify-end">
         {% if idUser == post.author or role == 2  %}
             {% if  comment.valide == 0 %}
-                <a class="mt-4 sm:mr-4" href="http://localhost/Unlinkedout/post/{{post.id}}/{{comment.id}}/valide">
+                <a class="mt-4 sm:mr-4" href="{{url}}/post/{{post.id}}/{{comment.id}}/valide">
                     <div class="flex justify-center items-center px-4 py-2 rounded-lg bg-blue-900 hover:bg-blue-800 hover:scale-[1.02] duration-300 cursor-pointer text-white">
                         Valider
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
@@ -90,7 +89,7 @@
             {% endif %}
         {% endif %}
         {% if  role == 2 or idUser == comment.author  %}
-            <a class="mt-4 sm:mr-4"href="http://localhost/Unlinkedout/post/{{post.id}}/{{comment.id}}/modify">
+            <a class="mt-4 sm:mr-4"href="{{url}}/post/{{post.id}}/{{comment.id}}/modify">
                 <div class="flex justify-center items-center px-4 py-2 rounded-lg bg-green-900 hover:bg-green-800 hover:scale-[1.02] duration-300 cursor-pointer text-white">
                     Modifier
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
@@ -99,7 +98,7 @@
 
                 </div>
             </a>
-            <a class="mt-4 sm:mr-4"href="http://localhost/Unlinkedout/post/{{post.id}}/{{comment.id}}/delete">
+            <a class="mt-4 sm:mr-4"href="{{url}}/post/{{post.id}}/{{comment.id}}/delete">
                 <div class="flex justify-center items-center px-4 py-2 rounded-lg bg-red-900 hover:bg-red-800 hover:scale-[1.02] duration-300 cursor-pointer text-white">
                     Supprimer
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">

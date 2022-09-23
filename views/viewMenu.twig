@@ -19,13 +19,13 @@
     </div>
     <div class="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
         <div class="text-sm lg:flex-grow">
-            <a href="http://localhost/Unlinkedout/accueil" class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4">
+            <a href="{{url}}/accueil" class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4">
                 post
             </a>
-            <a href="http://localhost/Unlinkedout/contact" class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4">
+            <a href="{{url}}/contact" class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4">
                 Contact
             </a>
-            <a href="http://localhost/Unlinkedout/user/all" class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4">
+            <a href="{{url}}/user/all" class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4">
                 authors
             </a>
 
@@ -33,15 +33,15 @@
         {% if idUser is empty %}
         <div class="ml-3 relative">
             <div>
-                <a href="http://localhost/Unlinkedout/login" class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white">
-                    connextion
+                <a href="{{url}}/login" class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white">
+                    connexion
                 </a>
             </div>
         </div>
         {% else %}
         <div class="ml-3 relative">
             <div>
-                <button onclick="window.location.href='http://localhost/Unlinkedout/user/{{ idUser }}';" type="button" class="bg-gray-800 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
+                <button onclick="window.location.href='{{url}}/user/{{ idUser }}';" type="button" class="bg-gray-800 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
                     <span class="sr-only">Open user menu</span>
                     {% if avatar is not empty %}
                         <img class="h-8 w-8 rounded-full" src="/Unlinkedout/{{ avatar }}" alt="">
@@ -50,8 +50,8 @@
                     {% endif %}
 
                 </button>
-                <a href="http://localhost/Unlinkedout/login/logout" class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white">
-                    deconextion
+                <a href="{{url}}/login/logout" class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white">
+                    déconnexion
                 </a>
             </div>
         </div>

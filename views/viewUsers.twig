@@ -39,8 +39,8 @@
 
                                 <td class="p-2 whitespace-nowrap">
                                     <div class="flex items-center">
-                                        <a href="http://localhost/Unlinkedout/user/{{user.id}}">
-                                            <div class="w-7 h-13 flex-shrink-0 mr-2 sm:mr-3"><img class="rounded-full" src="http://localhost/Unlinkedout/{{ user.avatar }}" width="40" height="40"></div>
+                                        <a href="{{url}}/user/{{user.id}}">
+                                            <div class="w-7 h-13 flex-shrink-0 mr-2 sm:mr-3"><img class="rounded-full" src="{{url}}/{{ user.avatar }}" width="40" height="40"></div>
                                         </a>
                                         <div class="font-medium text-gray-800">{{ user.name }}</div>
                                     </div>
@@ -62,9 +62,9 @@
                                 </td>
                                 <td class="p-2 whitespace-nowrap">
                                     <div class=" text-center">
-                                        <a class="text-blue-900" href="http://localhost/Unlinkedout/user/all/{{user.id}}/inactif"> inactif  </a>
-                                        <a  class="text-green-900"href="http://localhost/Unlinkedout/user/all/{{user.id}}/validate"> validate  </a>
-                                        <a  class="text-red-900" href="http://localhost/Unlinkedout/user/all/{{user.id}}/admin"> admin  </a>
+                                        <a class="text-blue-900" href="{{url}}/user/all/{{user.id}}/inactif"> inactif  </a>
+                                        <a  class="text-green-900"href="{{url}}/user/all/{{user.id}}/validate"> validate  </a>
+                                        <a  class="text-red-900" href="{{url}}/user/all/{{user.id}}/admin"> admin  </a>
                                     </div>
                                 </td>
                             </tr>
@@ -77,18 +77,18 @@
             </div>
         </div>
     </section>
-        <p> <a href="http://localhost/Unlinkedout/post/{{users.id}}">{{ users.title }} </p>
+        <p> <a href="{{url}}/post/{{users.id}}">{{ users.title }} </p>
        {{ user.email }}  </a>
 
             son role est {{ user.role }}
-             <a href="http://localhost/Unlinkedout/user/all/{{user.id}}/inactif"> inactif  </a>
-             <a href="http://localhost/Unlinkedout/user/all/{{user.id}}/validate"> validate  </a>
-             <a href="http://localhost/Unlinkedout/user/all/{{user.id}}/admin"> admin  </a>
+             <a href="{{url}}/user/all/{{user.id}}/inactif"> inactif  </a>
+             <a href="{{url}}/user/all/{{user.id}}/validate"> validate  </a>
+             <a href="{{url}}/user/all/{{user.id}}/admin"> admin  </a>
 
 </body>
 {% if role == 2 %}
-    <a href="http://localhost/Unlinkedout/user/all/tovalidate"> à valider  </a>
-    <a href="http://localhost/Unlinkedout/user/all"> / tout  </a>
+    <a href="{{url}}/user/all/tovalidate"> à valider  </a>
+    <a href="{{url}}/user/all"> / tout  </a>
 {% endif %}
 <footer>
 
