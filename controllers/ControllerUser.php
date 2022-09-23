@@ -35,7 +35,7 @@ class ControllerUser
                             }
                             $this->_userManager->update('author', $id, $value);
                         }
-                        exit(header('Location: http://localhost/Unlinkedout/user/all'));
+                        $this->users();
                     }
 
                 }else
@@ -43,27 +43,10 @@ class ControllerUser
             } else {
                 $id = intval($url[1]);
                 $author = $this->_userManager->getUser($id);
-                if (empty($_POST)) {
-                    if (!empty($url[2])) {
-                        if ($url[2] == "posts") {
-                            $this->posts($id);
-                        } else if (!empty($user) && ($author->getId() == $user->getId() || $user->getRole() == 2 || $user->getRole() == 1)) {
-                            if ($url[2] == "modify") {
-                                $this->modifyUser($author);
-                            } else if ($url[2] == "delete") {
-                                $this->_userManager->delete('author', $id);
-                                exit(header('Location: http://localhost/Unlinkedout/accueil'));
-                            }
-                        } else {
-                            $this->Unauthorized();
-                        }
-                    } else {
-                        $this->author($author);
-                    }
-                } else {
-                    $value = "name ='" . $_POST['name'] . "', firstname = '" . $_POST['firstname'] . "',description = '".$_POST['description']."', lastname = '";
-                    $value .= $_POST['lastname'] . "', email = '" . $_POST["email"] . "', password = '" . $_POST["password"] . "', avatar ='avatars/default.jpg'";
-                    $value .= ",link='".$_POST['fb']."/".$_POST['twitter']."/".$_POST['git']."/".$_POST['inst']."/".$_POST['ytb']."'";
+                if (!empty( $this->getPost('name'))) {
+                    $value = "name ='" . $this->getPost('name') . "', firstname = '" . $this->getPost('firstname') . "',description = '".$this->getPost('description')."', lastname = '";
+                    $value .= $this->getPost('lastname') . "', email = '" . $this->getPost("email") . "', password = '" . $this->getPost("password") . "'";
+                    $value .= ",link='".$this->getPost('fb')."/".$this->getPost('twitter')."/".$this->getPost('git')."/".$this->getPost('inst')."/".$this->getPost('ytb')."'";
                     if (isset($_FILES['avatar']) and !empty($_FILES['avatar']['name'])) {
                         $sizemax = 2097152;
                         $extensionsValides = array('jpg', 'jpeg', 'png');
@@ -107,11 +90,27 @@ class ControllerUser
                     }
                     if (!empty($msg)) {
                         echo $msg;
-                        exit();
 
                     }
                     $this->_userManager->update('author', $id, $value);
-                    exit(header('Location: http://localhost/Unlinkedout/user/' . $id));
+                    $this->author($author);
+                } else {
+                    if (!empty($url[2])) {
+                        if ($url[2] == "posts") {
+                            $this->posts($id);
+                        } else if (!empty($user) && ($author->getId() == $user->getId() || $user->getRole() == 2 || $user->getRole() == 1)) {
+                            if ($url[2] == "modify") {
+                                $this->modifyUser($author);
+                            } else if ($url[2] == "delete") {
+                                $this->_userManager->delete('author', $id);
+                               $this->users();
+                            }
+                        } else {
+                            $this->Unauthorized();
+                        }
+                    } else {
+                        $this->author($author);
+                    }
                 }
             }
         }
@@ -146,5 +145,15 @@ class ControllerUser
     private function Unauthorized(){
         $this->_view = new View('Unauthorized');
         $this->_view->generate(array('t'=>'Unauthorized' ));
+    }
+
+    private function  getPost($arg='') {
+        $post = filter_input(INPUT_POST, $arg);
+        if (!empty($post)) {
+            return $post;
+        }
+        else {
+            return '';
+        }
     }
 }

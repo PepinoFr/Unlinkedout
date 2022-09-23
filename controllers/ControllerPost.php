@@ -22,7 +22,7 @@ class ControllerPost
             if($url[2] == 'delete' ) {
                 if (authorized($user,$post)) {
                     $this->_postManager->delete('post',$id);
-                    exit( header('Location: http://localhost/Unlinkedout/accueil'));
+                    $this->posts();
                 }
                 else {
                     $this->Unauthorized();
@@ -31,13 +31,13 @@ class ControllerPost
             }
             else if ($url[2] == 'modify') {
                 if (authorized($user,$post)) {
-                    if(empty($_POST)) {
-                        $this->modifyPost($post);
+                    if(!empty($this->getPost('title'))) {
+                        $value ="body = '".$this->getPost("body")."', updated_at = '".$date."'".", title = '".$this->getPost("title")."', header = '".$this->getPost("header")."'";
+                        $this->_postManager->update('post',$id,$value);
+                        $this->post($id);
                     }
                     else {
-                        $value ="body = '".$_POST["body"]."', updated_at = '".$date."'".", title = '".$_POST["title"]."', header = '".$_POST["header"]."'";
-                        $this->_postManager->update('post',$id,$value);
-                        exit( header('Location: http://localhost/Unlinkedout/post/'.$id));
+                        $this->modifyPost($post);
                     }
                 }
                 else {
@@ -45,11 +45,11 @@ class ControllerPost
                 }
             }
             else if ($url[2] == 'create') {
-                if (!empty($_POST)) {
+                if (!empty($this->getPost('body'))) {
                     $fields = "created_at,body,post,updated_at,author";
-                    $value = "'" . $date . "','" . $_POST['body'] . "','" . $id . "','" . $date . "',".$user->getId();
+                    $value = "'" . $date . "','" . $this->getPost('body') . "','" . $id . "','" . $date . "',".$user->getId();
                     $this->_postManager->insertInto('comments',$fields,$value);
-                    exit( header('Location: http://localhost/Unlinkedout/post/'.$id));
+                    $this->post($id);
                 }
                 else {
                     if ($user->getRole() > 0)
@@ -62,7 +62,7 @@ class ControllerPost
                 if ($url[3] == 'delete' ) {
                     if ( authorized($user,$comment)) {
                         $this->_postManager->delete('comments',$idC);
-                        exit( header('Location: http://localhost/Unlinkedout/post/'.$id));
+                        $this->post($id);
                     }
                     else {
                         $this->Unauthorized();
@@ -70,13 +70,13 @@ class ControllerPost
                 }
                 else if( $url[3] == 'modify' ){
                     if (authorized($user,$comment)) {
-                        if(empty($_POST)) {
-                            $this->modifyComments($comment);
+                        if(!empty( $this->getPost('body'))) {
+                            $value ="body = '".$this->getPost("body")."', updated_at = '".$date."', valide = 0 ";
+                            $this->_postManager->update('comments',$idC,$value);
+                            $this->post($id);
                         }
                         else {
-                            $value ="body = '".$_POST["body"]."', updated_at = '".$date."', valide = 0 ";
-                            $this->_postManager->update('comments',$idC,$value);
-                            exit( header('Location: http://localhost/Unlinkedout/post/'.$id));
+                            $this->modifyComments($comment);
                         }
                     }
                     else {
@@ -87,7 +87,7 @@ class ControllerPost
                     if (authorized($user,$post)) {
                         $value = "valide = '1'";
                         $this->_postManager->update('comments',$idC,$value);
-                        exit( header('Location: http://localhost/Unlinkedout/post/'.$id));
+                        $this->post($id);
                     }
                     else {
                         $this->Unauthorized();
@@ -99,6 +99,12 @@ class ControllerPost
             $this->post($id);
         }
 
+    }
+    private function posts()
+    {
+        $posts = $this->_postManager->getPosts();
+        $this->_view = new View('Accueil');
+        $this->_view->generate(array('t'=>'post','posts'=>$posts));
     }
     private function post($id)
     {
@@ -134,5 +140,15 @@ class ControllerPost
     private function Unauthorized(){
         $this->_view = new View('Unauthorized');
         $this->_view->generate(array('t'=>'Unauthorized' ));
+    }
+
+    private function  getPost($arg='') {
+        $post = filter_input(INPUT_POST, $arg);
+        if (!empty($post)) {
+            return $post;
+        }
+        else {
+            return '';
+        }
     }
 }

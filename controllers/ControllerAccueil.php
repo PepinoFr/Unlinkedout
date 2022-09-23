@@ -36,7 +36,6 @@ class ControllerAccueil
     private function posts()
     {
         $posts = $this->_postManager->getPosts();
-
         $this->_view = new View('Accueil');
         $this->_view->generate(array('t'=>'post','posts'=>$posts));
     }

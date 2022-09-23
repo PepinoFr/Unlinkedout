@@ -16,15 +16,15 @@ class ControllerLogin
             $this->_userManager = new UserManager;
             if (!empty($url[1])) {
                 if ( $url[1] == "create") {
-                    if (!empty($_POST)) {
-                        $user = $this->_userManager->getUserByEmail($_POST['email']);
+                    if (!empty($this->getPost('email'))) {
+                        $user = $this->_userManager->getUserByEmail($this->getPost('email'));
                         if (empty($user)) {
-                            $fields = "name,email,password,role";
-                            $value = "'" . $_POST['pseudo'] . "','" . $_POST['email'] . "','" . $_POST['password'] . "','0'";
+                            $fields = "name,email,password,role,avatar";
+                            $value = "'" . $this->getPost('pseudo') . "','" . $this->getPost('email') . "','" . $this->getPost('password') . "','0','avatars/default.jpg'";
                             $this->_userManager->insertInto('author', $fields, $value);
-                            $user = $this->_userManager->auth($_POST['email'],$_POST['password']);
+                            $user = $this->_userManager->auth($this->getPost('email'),$this->getPost('password'));
                             connect($user);
-                            exit(header('Location: http://localhost/Unlinkedout/user/'.$user->getId()));
+                            $this->author($user);
                         } else {
                             $this->register(1);
                         }
@@ -37,23 +37,27 @@ class ControllerLogin
                 }
             }
             else {
-                $erreur="";
-                if (!empty($_POST)) {
-                    $user = $this->_userManager->auth($_POST['email'],$_POST['password']);
+                $erreur='';
+                if (!empty($this->getPost('email'))) {
+                    $user = $this->_userManager->auth($this->getPost('email'),$this->getPost('password'));
                     if (!empty($user)) {
                         connect($user);
-                        exit(header('Location: http://localhost/Unlinkedout/user/'.$user->getId()));
-                        //$_SESSION['connecte'] = $user;
-                      //  exit( header('Location: http://localhost/Unlinkedout/accueil'));
+                        $this->author($user);
                     }
                     else {
                         $erreur=1;
                     }
                 }
-
-                $this->login($erreur);
+                if (empty($user)) {
+                    $this->login($erreur);
+                }
             }
         }
+    }
+    private function author($author)
+    {
+        $this->_view = new View('User');
+        $this->_view->generate(array('t'=>'Author','author'=>$author ));
     }
     private function login($erreur)
     {
@@ -66,5 +70,14 @@ class ControllerLogin
 
         $this->_view = new View('RegisterLogin');
         $this->_view->generate(array('t' => 'Register','exist'=>$exist ));
+    }
+    private function  getPost($arg='') {
+        $post = filter_input(INPUT_POST, $arg);
+        if (!empty($post)) {
+            return $post;
+        }
+        else {
+            return '';
+        }
     }
 }

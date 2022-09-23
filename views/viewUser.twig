@@ -4,56 +4,12 @@
     <meta charset="UTF-8">
     <title> {{ t }} </title>
 </head>
-<!--<table class="border-collapse border border-slate-500 ...">
-    <thead>
-    <tr>
-        <th class="border border-slate-600 ...">pseudo</th>
-        <th class="border border-slate-600 ...">{{ author.name }}</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr>
-        <td class="border border-slate-700 ...">prenom</td>
-        <td class="border border-slate-700 ...">{{ author.firstname }}</td>
-    </tr>
-    <tr>
-        <td class="border border-slate-700 ...">nom</td>
-        <td class="border border-slate-700 ...">{{  author.lastname}}</td>
-    </tr>
-    <tr>
-        <td class="border border-slate-700 ...">email</td>
-        <td class="border border-slate-700 ...">{{ author.email }}</td>
-    </tr>
-    <tr>
-        {% if idUser == author.id or role == 2  %}
-            <td class="border border-slate-700 ..."><a href="http://localhost/Unlinkedout/user/{{author.id}}/modify">modifer</a></td>
-            <td class="border border-slate-700 ..."><a href="http://localhost/Unlinkedout/user/{{author.id}}/delete">supprimer</a></td>
-        {% endif %}
-
-    </tr>
-    </tbody>
-</table>
-
-{% if author.cv is not empty %}
-
-<p>Ouvrirr le
-    <a href="/Unlinkedout/{{ author.cv }}">cv</a>.
-</p>
-{% endif %}
--->
 <body class="font-sans antialiased text-gray-900 leading-normal tracking-wider bg-cover" style="background-image:url('https://source.unsplash.com/1L71sPT5XKc');">
-
-
-
-
 <div class="max-w-4xl flex items-center h-auto lg:h-screen flex-wrap mx-auto my-32 lg:my-0">
-
     <!--Main Col-->
     <div id="profile" class="w-full lg:w-3/5 rounded-lg lg:rounded-l-lg lg:rounded-r-none shadow-2xl bg-white opacity-75 mx-6 lg:mx-0">
-
-
         <div class="p-4 md:p-12 text-center lg:text-left">
-            {% if idUser == post.author or role == 2  %}
+            {% if idUser == author.id or role == 2  %}
                 <a class="mt-4 sm:mr-4" href="http://localhost/Unlinkedout/user/{{author.id}}/modify">
                     <div class="flex justify-center items-center px-4 py-2 rounded-lg bg-green-900 hover:bg-green-800 hover:scale-[1.02] duration-300 cursor-pointer text-white">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
@@ -133,7 +89,7 @@
         </div>
     </div>
     <div class="w-full lg:w-2/5">
-        <img src="../{{author.avatar }}" class="rounded-none lg:rounded-lg shadow-2xl hidden lg:block">
+        <img src="http://localhost/Unlinkedout/{{author.avatar }}" class="rounded-none lg:rounded-lg shadow-2xl hidden lg:block">
     </div>
 </div>
 
