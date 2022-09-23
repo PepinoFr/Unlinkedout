@@ -1,6 +1,6 @@
 <?php
 
-require_once 'views/View.php';
+include_once 'views/View.php';
 class ControllerAccueil
 {
     private $_postManager;
@@ -14,12 +14,12 @@ class ControllerAccueil
         }
         $user = getConnect();
         if (!empty($url[1]) && $url[1] == "create") {
-            if (!empty($_POST)) {
-                $fields = "title,body,updated_at,created_at,author,header"; // to do author est la personne connecte
+            if (!empty($this->getPost())) {
+                $fields = "title,body,updated_at,created_at,author,header";
                 $date = date("Y-n-j");
-                $value = "'".$_POST['title']."','".$_POST['body']."','".$date."','".$date."',".$user->getId().",'".$_POST['header']."'";
+                $value = "'".$this->getPost('title')."','".$this->getPost('body')."','".$date."','".$date."',".$user->getId().",'".$this->getPost('header')."'";
                 $this->_postManager->insertInto('post',$fields,$value);
-                exit( header('Location: http://localhost/Unlinkedout/accueil'));
+                $this->posts();
             }
             else {
                 if ( !empty($user) && $user->getRole() > 0 ) {
@@ -50,5 +50,11 @@ class ControllerAccueil
         $this->_view->generate(array('t'=>'Unauthorized' ));
     }
 
+    private function  getPost($arg='') {
+        if (empty($arg)) {
+            return $_POST;
+        }
+        return $_POST[$arg];
+}
 
 }
