@@ -14,9 +14,7 @@ class Router
                 require_once ('models/'.$class.'.php');
 
             });
-
             $url ='';
-
             if (isset($_GET['url']))
             {
                 $url = explode('/',filter_var($_GET['url'],FILTER_SANITIZE_URL));
@@ -42,5 +40,6 @@ class Router
            $this->_view->generate(array('errorMSG'=> $errorMsg));
         }
     }
+
 
 }

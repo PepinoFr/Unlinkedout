@@ -78,7 +78,6 @@ class ControllerUser
                                 $move = move_uploaded_file($_FILES['cv']['tmp_name'], $chemin);
                                 if ($move) {
                                     $value .= ",cv ='" . $chemin . "'";
-                                    echo $value;
                                 } else {
                                     $msg = " Erreur de deplacement ";
                                 }
