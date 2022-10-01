@@ -17,6 +17,7 @@ class ControllerLogin
             if (!empty($url[1])) {
                 if ( $url[1] == "create") {
                     if (!empty($this->getPost('email'))) {
+                        //checks if the email address exists before creating the user
                         $user = $this->_userManager->getUserByEmail($this->getPost('email'));
                         if (empty($user)) {
                             $fields = "name,email,password,role,avatar";
@@ -38,6 +39,7 @@ class ControllerLogin
             }
             else {
                 $erreur='';
+                //part of the code for this login
                 if (!empty($this->getPost('email'))) {
                     $user = $this->_userManager->auth($this->getPost('email'),$this->getPost('password'));
                     if (!empty($user)) {

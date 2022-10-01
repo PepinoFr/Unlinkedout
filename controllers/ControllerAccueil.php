@@ -14,6 +14,8 @@ class ControllerAccueil
         }
         $user = getConnect();
         if (!empty($url[1]) && $url[1] == "create") {
+            //
+            //if the _POST variable is not empty then we create a post
             if (!empty($this->getPost('title'))) {
                 $fields = "title,body,updated_at,created_at,author,header";
                 $date = date("Y-n-j");
@@ -21,6 +23,7 @@ class ControllerAccueil
                 $this->_postManager->insertInto('post',$fields,$value);
                 $this->posts();
             }
+            // else we redirect to the creation page
             else {
                 if ( !empty($user) && $user->getRole() > 0 ) {
                     $this->createPost();

@@ -43,6 +43,7 @@ class ControllerUser
             } else {
                 $id = (int)$url[1];
                 $author = $this->_userManager->getUser($id);
+                // update of a user
                 if (!empty( $this->getPost('name'))) {
                     $value = "name ='" . $this->getPost('name') . "', firstname = '" . $this->getPost('firstname') . "',description = '".$this->getPost('description')."', lastname = '";
                     $value .= $this->getPost('lastname') . "', email = '" . $this->getPost("email") . "', password = '" . $this->getPost("password") . "'";
@@ -96,6 +97,7 @@ class ControllerUser
                     $this->author($author);
                 } else {
                     if (!empty($url[2])) {
+                        //displays all posts of a user
                         if ($url[2] == "posts") {
                             $this->posts($id);
                         } else if (!empty($user) && ($author->getId() == $user->getId() || $user->getRole() == 2 || $user->getRole() == 1)) {

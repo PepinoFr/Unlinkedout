@@ -8,8 +8,6 @@ class ControllerPost
 
     public function __construct($url)
     {
-
-
         $this->_postManager = new PostManager;
         if (empty($url)) {
             throw new Exception('Page introuvable');
@@ -17,6 +15,7 @@ class ControllerPost
         $id = intval($url[1]);
         $date = date("Y-n-j");
         $user = getConnect();
+        // part of the code to edit or delete a post
         if ( !empty($url[2]) && !empty($user) )  {
             $post = $this->_postManager->getPost($id);
             if($url[2] == 'delete' ) {
@@ -27,8 +26,8 @@ class ControllerPost
                 else {
                     $this->Unauthorized();
                 }
-
             }
+            //part of the code to create, modify, delete, validate a comment
             else if ($url[2] == 'modify') {
                 if (authorized($user,$post)) {
                     if(!empty($this->getPost('title'))) {
