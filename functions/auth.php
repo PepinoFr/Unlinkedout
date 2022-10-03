@@ -34,7 +34,6 @@ function logout() {
         session_start();
     }
     unset($_SESSION['connect']);
-    exit( header('Location: http://localhost/Unlinkedout/accueil'));
 
 }
 
